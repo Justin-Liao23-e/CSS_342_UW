@@ -12,16 +12,17 @@ public:
     int id() const;
     void setId(int id);
 
-    // Coin management functions
-    void insertCoin(double amount); // Adds the inserted coin to the balance
-    double currentBalance() const;  // Returns the current balance
-    double refundCoins();           // Refunds all inserted coins, returning the balance to 0
+    // Buy Function
+    bool buy(double price, int quantity); //allow customer to buy snacks; return true and reduce balance if enough balance, else return false
 
-    // Snack purchase functions
-    bool purchaseSnack(double price);  // Attempts to purchase a snack, returns true if successful, false if insufficient funds
+    // addBal Function
+    void addBal(double amount); //add amount to the balance
 
-    // Reset the bank
-    void resetBank();  // Resets the bank to its initial state, clearing the balance
+    // getBal Function
+    double getBal() const; //return current balance
+
+    // refund Function
+    void refund(); //refund the balance by canceling the transaction
 
 private:
     // id_ is a unique identifier for the VendingBank
