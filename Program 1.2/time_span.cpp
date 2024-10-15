@@ -23,7 +23,7 @@ TimeSpan::TimeSpan(double seconds) {
 }
 
 TimeSpan::TimeSpan(double minutes, double seconds) {
-    double temp = minutes*60.0 + seconds; //same as above but with min
+    double temp = minutes*60.00 + seconds; //same as above but with min
     // Same As Above
     if (temp >= 0.0) {
         temp += 0.5;  
@@ -35,7 +35,7 @@ TimeSpan::TimeSpan(double minutes, double seconds) {
 }
 
 TimeSpan::TimeSpan(double hours, double minutes, double seconds) {
-    double temp = hours*3600.0 + minutes*60.0 + seconds; //same as above but with hr
+    double temp = hours*3600.00 + minutes*60.00 + seconds; //same as above but with hr
     // Same As Above
     if (temp >= 0.0) {
         temp += 0.5;  
@@ -88,10 +88,7 @@ int TimeSpan::seconds()const {
 }
 
 void TimeSpan::set_time(int hours, int minutes, int seconds) {
-    hours_ = hours;
-    minutes_ = minutes;
-    seconds_ = seconds;
-    int total = hours_*3600 + minutes_*60 + seconds_;
+    int total = hours*3600 + minutes*60 + seconds;
     convert(total); //reset the time
 }
 
@@ -140,9 +137,9 @@ bool TimeSpan::operator!=(const TimeSpan &timeObj) const { //similar to above
 }
 
 bool TimeSpan::operator<(const TimeSpan &timeObj) const {
-    if (hours_ != timeObj.hours_) {
+    if (hours_ != timeObj.hours_) { //compare if equal, if not then return bool to check
         return hours_ < timeObj.hours_;
-    } else if (minutes_ != timeObj.minutes_) {
+    } else if (minutes_ != timeObj.minutes_) { //same as above, if equal then move to third one to check
         return minutes_ < timeObj.minutes_;
     } else {
         return seconds_ < timeObj.seconds_;
@@ -180,9 +177,9 @@ bool TimeSpan::operator>=(const TimeSpan &timeObj) const {
 }
 
 istream& operator>>(istream &stream, TimeSpan& timeObj) {
-    int hours, minutes, seconds;
-    stream >> hours >> minutes >> seconds; //read the values
-    timeObj.set_time(hours, minutes, seconds); //set time to the object
+    stream >> timeObj.hours_ >> timeObj.minutes_ >> timeObj.seconds_; //read the values
+    int total = timeObj.hours_*3600 + timeObj.minutes_*60 + timeObj.seconds_;
+    timeObj.convert(total); //range conversion
     return stream; 
 }
 

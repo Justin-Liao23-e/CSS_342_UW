@@ -43,7 +43,7 @@ public:
     bool operator>(const TimeSpan &timeObj) const;
     bool operator>=(const TimeSpan &timeObj) const;
 
-    // Input/Output Operators Overloads
+    // Input/Output Operators Overloads (non-member function)
     friend istream& operator>>(istream &stream, TimeSpan& timeObj);
     friend ostream& operator<<(ostream &stream, const TimeSpan &timeObj);
 };      
