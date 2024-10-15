@@ -47,8 +47,7 @@ TimeSpan::TimeSpan(double hours, double minutes, double seconds) {
 }
 
 // convert Function: Convert each unit to the right range
-void TimeSpan::convert(int total_s)
-{
+void TimeSpan::convert(int total_s) {
     // Recalculate Total Seconds (including out-of-range exceptions)
     hours_ = total_s / 3600; 
     int temp = total_s % 3600; //remaining seconds after hours conversion (for calculation below)
@@ -56,22 +55,15 @@ void TimeSpan::convert(int total_s)
     seconds_ = temp % 60;
 
     // Reset Range For Seconds (-59 to 59)
-    if (seconds_ >= 60) {
+    if (seconds_ >= 60 || seconds_ <= -60) {
         minutes_ += seconds_ / 60;
         seconds_ %= 60; //reset seconds
-    } else if (seconds_ <= -60) {
-        minutes_ += seconds_ / 60;
-        seconds_ %= 60;
     }
-
     // Reset Range For Minutes (-59 to 59)
-    if (minutes_ >= 60) {
+    if (minutes_ >= 60 || minutes_ <= -60) {
         hours_ += minutes_ / 60;
         minutes_ %= 60; //reset minutes
-    } else if (minutes_ <= -60) {
-        hours_ += minutes_ / 60;
-        minutes_ %= 60;
-    }
+    } 
 }
 
 // Accessor Functions
