@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include "time_span.h"
 
 using namespace std;
@@ -50,6 +51,93 @@ bool TestAddInPlace() {
     return true;
 }
 
+// Subtraction Operator
+bool TestSubtract() {
+    TimeSpan ts1(2, 65, 31);
+    TimeSpan ts2(2, 15, 15);
+    TimeSpan result = ts1 - ts2;
+    return CheckValues(result, 0, 50, 16);
+}
+
+// In-place Subtraction Operator
+bool TestSubtractInPlace() {
+    TimeSpan ts1(5, 6, 7);
+    TimeSpan ts2(1, 1, 1);
+    if ((!CheckValues(ts1, 5, 6, 7)) || (!CheckValues(ts2, 1, 1, 1)))
+    {
+        return false;
+    }
+    ts1 -= ts2;
+    if ((!CheckValues(ts1, 4, 5, 6)) || (!CheckValues(ts2, 1, 1, 1)))
+    {
+        return false;
+    }
+    return true;
+}
+
+// == Operator
+bool TestEquality() {
+    TimeSpan ts1(2, 3, 65);
+    TimeSpan ts2(2, 3, 65);
+    TimeSpan ts3(1, 15, 25);
+    return (ts1 == ts2) && !(ts1 == ts3);
+}
+
+// != Operator
+bool TestInequality() {
+    TimeSpan ts1(2, 3, 65);
+    TimeSpan ts2(2, 3, 65);
+    TimeSpan ts3(1, 15, 25);
+    return !(ts1 != ts2) && (ts1 != ts3);
+}
+
+// < Operator
+bool TestLessThan() {
+    TimeSpan ts1(2, 15, 10);
+    TimeSpan ts2(2, 15, 35);
+    return (ts1 < ts2);
+}
+
+// <= Operator
+bool TestLessThanOrEqual() {
+    TimeSpan ts1(2, 15, 10);
+    TimeSpan ts2(2, 15, 35);
+    TimeSpan ts3(2, 15, 35);
+    return (ts1 <= ts2) && (ts2 <= ts3);
+}
+
+// > Operator
+bool TestGreaterThan() {
+    TimeSpan ts1(2, 15, 35);
+    TimeSpan ts2(2, 15, 10);
+    return (ts1 > ts2);
+}
+
+// >= Operator
+bool TestGreaterThanOrEqual() {
+    TimeSpan ts1(2, 15, 35);
+    TimeSpan ts2(2, 15, 10);
+    TimeSpan ts3(2, 15, 10);
+    return (ts1 >= ts2) && (ts2 >= ts3);
+}
+
+// Input Operator
+bool InputStream() {
+    istringstream temp("2 15 35"); //create an input string stream with the values "2 15 35"
+    TimeSpan ts;
+    temp >> ts; //extract the values into the TimeSpan object
+    return CheckValues(ts, 2, 15, 35); 
+}
+
+// Output Operator
+bool OutputStream() {
+    TimeSpan ts(2, 15, 35);
+    ostringstream temp; //create an output string stream
+    temp << ts; //insert the TimeSpan object into the stream
+    string eTemp = "Hours: 2, Minutes: 15, Seconds: 35";
+    return (temp.str() == eTemp);
+}
+
 int main() {
     cout << "Testing TimeSpan Class" << endl;
     if (!TestZeros()) cout << "Failed: TestZeros" << endl;
@@ -58,80 +146,18 @@ int main() {
     if (!TestNegativeHour()) cout << "Failed: TestNegativeHour" << endl;
     if (!TestAdd()) cout << "Failed: TestAdd" << endl;
     if (!TestAddInPlace) cout << "Failed: TestAddInPlace" << endl;
+    // New Tests (below)
+    if (!TestSubtract()) cout << "Failed: TestSubtract" << endl;
+    if (!TestSubtractInPlace) cout << "Failed: TestSubtractInPlace" << endl;
+    if (!TestEquality()) cout << "Failed: TestEquality" << endl;
+    if (!TestInequality()) cout << "Failed: TestInequality" << endl;
+    if (!TestLessThan()) cout << "Failed: TestLessThan" << endl;
+    if (!TestLessThanOrEqual()) cout << "Failed: TestLessThanOrEqual" << endl;
+    if (!TestGreaterThan()) cout << "Failed: TestGreaterThan" << endl;
+    if (!TestGreaterThanOrEqual()) cout << "Failed: TestGreaterThanOrEqual" << endl;
+    if (!InputStream()) cout << "Failed: InputStream" << endl;
+    if (!OutputStream()) cout << "Failed: OutputStream" << endl;
     cout << "Testing Complete" << endl;
-
-    // Test constructors
-    TimeSpan ts1;
-    TimeSpan ts2(1, 30, 45);
-    TimeSpan ts3(90.75);
-    TimeSpan ts4(1, 30.5);
-    TimeSpan ts5(1, 30, 45.5);
-
-    // Test functions
-    cout << "Hours: " << ts2.hours() << endl;
-    cout << "Minutes: " << ts2.minutes() << endl;
-    cout << "Seconds: " << ts2.seconds() << endl;
-
-    ts2.set_time(9, 90, 90);
-    cout << "Set Time - Hours: " << ts2.hours() << ", Minutes: " << ts2.minutes() << ", Seconds: " << ts2.seconds() << endl;
-
-    // Test operator overloads
-    TimeSpan ts6 = ts2 + ts3;
-    cout << "Addition: " << ts6 << endl;
-
-    TimeSpan ts7 = ts2 - ts3;
-    cout << "Subtraction: " << ts7 << endl;
-
-    TimeSpan ts8 = -ts2;
-    cout << "Negation: " << ts8 << endl;
-
-    ts2 += ts3;
-    cout << "Addition Assignment: " << ts2 << endl;
-
-    ts2 -= ts3;
-    cout << "Subtraction Assignment: " << ts2 << endl;
-
-    if (ts2 == ts3) {
-        cout << "Equality: ts2 is equal to ts3" << endl;
-    } else {
-        cout << "Equality: ts2 is not equal to ts3" << endl;
-    }
-
-    if (ts2 != ts3) {
-        cout << "Inequality: ts2 is not equal to ts3" << endl;
-    } else {
-        cout << "Inequality: ts2 is equal to ts3" << endl;
-    }
-
-    if (ts2 < ts3) {
-        cout << "Less than: ts2 is less than ts3" << endl;
-    } else {
-        cout << "Less than: ts2 is not less than ts3" << endl;
-    }
-
-    if (ts2 <= ts3) {
-        cout << "Less than or equal: ts2 is less than or equal to ts3" << endl;
-    } else {
-        cout << "Less than or equal: ts2 is not less than or equal to ts3" << endl;
-    }
-
-    if (ts2 > ts3) {
-        cout << "Greater than: ts2 is greater than ts3" << endl;
-    } else {
-        cout << "Greater than: ts2 is not greater than ts3" << endl;
-    }
-
-    if (ts2 >= ts3) {
-        cout << "Greater than or equal: ts2 is greater than or equal to ts3" << endl;
-    } else {
-        cout << "Greater than or equal: ts2 is not greater than or equal to ts3" << endl;
-    }
-
-    // Test input/output operators
-    TimeSpan ts9;
-    cout << "Enter time (hours minutes seconds): ";
-    cin >> ts9;
-    cout << "You entered: " << ts9 << endl;
 
     return 0;
 }

@@ -1,6 +1,5 @@
-#include <cmath>
-#include "time_span.h"
 #include <iostream>
+#include "time_span.h"
 
 using namespace std;
 
