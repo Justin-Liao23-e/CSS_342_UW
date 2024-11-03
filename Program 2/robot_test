@@ -5,3 +5,18 @@ echo "TEST 2: (Already there)"
 ./greedy_robot 2 1 1 1 1
 echo "TEST 3: (NP, 0)"
 ./greedy_robot 1 1 1 5 1
+# Other Test Cases
+echo "TEST 4: (NP, 0)"
+./greedy_robot 0 0 0 1 1
+echo "TEST 5: (multiple paths)"
+./greedy_robot 100 0 0 5 5
+echo "TEST 6: (negative coordinates)"
+./greedy_robot 2 -5 -5 -1 -1
+echo "TEST 7: (one step vertical)"
+./greedy_robot 2 1 1 2 1
+echo "TEST 8: (one step horizontal)"
+./greedy_robot 2 1 1 1 2
+echo "TEST 9: (edge case)"
+./greedy_robot 2 0 0 5 5
+echo "TEST 11: (Mixed coordinates)"
+./greedy_robot 3 23 -25 27 -22
