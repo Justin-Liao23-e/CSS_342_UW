@@ -198,12 +198,12 @@ void QuickSort(vector<int>& vec, int first, int last) {
 
 // ShellSort Function
 void ShellSort(vector<int>& vec, int first, int last) {
-    int size = last + 1; //vector size
-    for (int gap = size / 2; gap > 0; gap /= 2) { //start with a large gap, then reduce by half
-        for (int i = gap; i < size; i++) { //iterate over elements starting from the gap
+    int size = last - first + 1; //array size
+    for (int gap = size / 2; gap > 0; gap /= 2) { //gap size halved
+        for (int i = first + gap; i <= last; i++) {
             int temp = vec[i];
             int j;
-            for (j = i; j >= gap && vec[j - gap] > temp; j -= gap) { //shift elements to the right by gap until temp finds its position
+            for (j = i; j >= first + gap && vec[j - gap] > temp; j -= gap) {
                 vec[j] = vec[j - gap];
             }
             vec[j] = temp;
